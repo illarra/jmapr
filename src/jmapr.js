@@ -14,9 +14,9 @@
     
     // Return this to mantain jQuery chainability
     return this.each(function() {
-      var $this     = $(this),
-          maptypes  = ['roadmap', 'satellite', 'terrain', 'hybrid'],
-          idPrefix  = 'jmapr_',
+      var $this    = $(this),
+          maptypes = ['roadmap', 'satellite', 'terrain', 'hybrid'],
+          idPrefix = 'jmapr_',
           zoom;
          
       // If options exist, lets merge them
