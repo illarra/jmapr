@@ -13,7 +13,6 @@
     // Return this to mantain jQuery chainability
     return this.each(function() {
       var $this     = $(this),
-          baseurl   = 'http://maps.google.com/maps/api/staticmap',
           maptypes  = ['roadmap', 'satellite', 'terrain', 'hybrid'],
           timestamp = + new Date(),
           zoom;
@@ -44,7 +43,7 @@
         $('<img />')
           .attr('id', 'jmapr_' + i + '' + timestamp)
           .attr('src',
-            baseurl
+            'http://maps.google.com/maps/api/staticmap'
             + '?maptype=' + settings.maptype
             + '&center=' + settings.latitude + ',' + settings.longitude
             + '&zoom='+ zoom[i]
