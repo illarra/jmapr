@@ -6,7 +6,7 @@
       'longitude': 0,
       'height'   : 100,
       'width'    : 300,
-      'zoom'     : [13,6,3],
+      'zoom'     : [3,6,13],
       'maptype'  : 'terrain'
     };
     
@@ -15,7 +15,8 @@
       var $this     = $(this),
           baseurl   = 'http://maps.google.com/maps/api/staticmap',
           maptypes  = ['roadmap', 'satellite', 'terrain', 'hybrid'],
-          timestamp = + new Date();
+          timestamp = + new Date(),
+          zoom;
          
       // If options exist, lets merge them
       // with our default settings
@@ -28,7 +29,9 @@
         settings.maptype = 'terrain';
       }
       
+      // Arrange zooms and
       // Check number of zooms (max. 3)
+      zoom = settings.zoom.sort(function(a,b) { return a - b; } );
       // TODO
       
       // Set map div as relative
@@ -37,14 +40,14 @@
       });
       
       // Create static images and append to map
-      for (i in settings.zoom) {
+      for (i in zoom) {
         $('<img />')
           .attr('id', 'jmapr_' + i + '' + timestamp)
           .attr('src',
             baseurl
             + '?maptype=' + settings.maptype
             + '&center=' + settings.latitude + ',' + settings.longitude
-            + '&zoom='+ settings.zoom[i]
+            + '&zoom='+ zoom[i]
             + '&size=' + settings.width + 'x' + settings.height
             + '&sensor=false'
           )
@@ -54,7 +57,7 @@
             position: 'absolute',
             top: 0,
             left: 0,
-            zIndex: i + 100
+            zIndex: 999 - zoom[i]
           })
           .appendTo($this);
       }
