@@ -16,6 +16,7 @@
       var $this     = $(this),
           maptypes  = ['roadmap', 'satellite', 'terrain', 'hybrid'],
           timestamp = + new Date(),
+          idPrefix  = 'jmapr_' + timestamp,
           zoom;
          
       // If options exist, lets merge them
@@ -31,7 +32,7 @@
       
       // Sort zooms and
       // check number of zooms (max. 3)
-      zoom = settings.zoom.sort(function(a,b) { return a - b; } );
+      zoom = settings.zoom.sort(function(a,b) { return a - b; });
       // TODO
       
       // Set map div as relative
@@ -42,7 +43,7 @@
       // Create static images and append to map
       for (i in zoom) {
         $('<img />')
-          .attr('id', 'jmapr_' + i + '' + timestamp)
+          .attr('id', idPrefix + i)
           .attr('src',
             'http://maps.google.com/maps/api/staticmap'
             + '?maptype=' + settings.maptype
@@ -62,12 +63,34 @@
           .appendTo($this);
       }
       
-      /*
-      $('#2' + timestamp)
-        .mouseenter(function() { $(this).hide(); });
-      $('#1' + timestamp)
-        .mouseleave(function() { $('#2' + timestamp).show(); });
-      */
+      // Create Dot
+      // TODO: use a nice image or canvas
+      $('<div />')
+        .attr('id', idPrefix + 'dot')
+        .css({
+          position: 'absolute',
+          top: (settings.height / 2) - 8,
+          left: (settings.width / 2) - 8,
+          zIndex: 999,
+          background: 'green',
+          height: 16,
+          width: 16
+        })
+        .appendTo($this);
+      
+      // UX
+      // First zoom
+      $this.mouseenter(function() {
+        $('#' + idPrefix + 0).hide();
+      }).mouseleave(function() {
+        $('#' + idPrefix + 0).show();
+      });
+      // Second zoom
+      $('#' + idPrefix + 'dot').mouseenter(function() {
+        $('#' + idPrefix + 1).hide();
+      }).mouseleave(function() {
+        $('#' + idPrefix + 1).show();
+      });
     });
   };
 })(jQuery);
