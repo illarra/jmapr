@@ -9,7 +9,7 @@
       'zoom'        : [3,6,13],
       'maptype'     : 'terrain',
       'sensor'      : 'false',
-      'fadeDuration': 100
+      'fadeDuration': 200
     };
     
     // Return this to mantain jQuery chainability
