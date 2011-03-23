@@ -15,8 +15,7 @@
     return this.each(function() {
       var $this     = $(this),
           maptypes  = ['roadmap', 'satellite', 'terrain', 'hybrid'],
-          timestamp = + new Date(),
-          idPrefix  = 'jmapr_' + timestamp,
+          idPrefix  = 'jmapr_',
           zoom;
          
       // If options exist, lets merge them
