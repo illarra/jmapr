@@ -55,26 +55,26 @@
           .attr('height', settings.height)
           .attr('width', settings.width)
           .css({
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            zIndex: 999 - zoom[i]
+            'position': 'absolute',
+            'top'     : 0,
+            'left'    : 0,
+            'zIndex'  : 999 - zoom[i]
           })
           .appendTo($this);
       }
       
-      // Create Dot
+      // Create dot and append to map
       // TODO: use a nice image or canvas
       $('<div />')
         .attr('id', idPrefix + 'dot')
         .css({
-          position: 'absolute',
-          top: (settings.height / 2) - 8,
-          left: (settings.width / 2) - 8,
-          zIndex: 999,
-          background: 'green',
-          height: 16,
-          width: 16
+          'position'        : 'absolute',
+          'top'             : (settings.height / 2) - 8,
+          'left'            : (settings.width / 2) - 8,
+          'zIndex'          : 999,
+          'background-color': 'green',
+          'height'          : 16,
+          'width'           : 16
         })
         .appendTo($this);
       
