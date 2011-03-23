@@ -2,13 +2,14 @@
   $.fn.jmapr = function(options) {
     // Default settings
     var settings = {
-      'latitude' : 0,
-      'longitude': 0,
-      'height'   : 100,
-      'width'    : 300,
-      'zoom'     : [3,6,13],
-      'maptype'  : 'terrain',
-      'sensor'   : 'false'
+      'latitude'    : 0,
+      'longitude'   : 0,
+      'height'      : 100,
+      'width'       : 300,
+      'zoom'        : [3,6,13],
+      'maptype'     : 'terrain',
+      'sensor'      : 'false',
+      'fadeDuration': 100
     };
     
     // Return this to mantain jQuery chainability
@@ -80,15 +81,15 @@
       // UX
       // First zoom
       $this.mouseenter(function() {
-        $('#' + idPrefix + 0).hide();
+        $('#' + idPrefix + 0).fadeOut(settings.fadeDuration);
       }).mouseleave(function() {
-        $('#' + idPrefix + 0).show();
+        $('#' + idPrefix + 0).fadeIn(settings.fadeDuration);
       });
       // Second zoom
       $('#' + idPrefix + 'dot').mouseenter(function() {
-        $('#' + idPrefix + 1).hide();
+        $('#' + idPrefix + 1).fadeOut(settings.fadeDuration);
       }).mouseleave(function() {
-        $('#' + idPrefix + 1).show();
+        $('#' + idPrefix + 1).fadeIn(settings.fadeDuration);
       });
     });
   };
