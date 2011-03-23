@@ -7,7 +7,8 @@
       'height'   : 100,
       'width'    : 300,
       'zoom'     : [3,6,13],
-      'maptype'  : 'terrain'
+      'maptype'  : 'terrain',
+      'sensor'   : 'false'
     };
     
     // Return this to mantain jQuery chainability
@@ -28,8 +29,8 @@
         settings.maptype = 'terrain';
       }
       
-      // Arrange zooms and
-      // Check number of zooms (max. 3)
+      // Sort zooms and
+      // check number of zooms (max. 3)
       zoom = settings.zoom.sort(function(a,b) { return a - b; } );
       // TODO
       
@@ -45,10 +46,10 @@
           .attr('src',
             'http://maps.google.com/maps/api/staticmap'
             + '?maptype=' + settings.maptype
-            + '&center=' + settings.latitude + ',' + settings.longitude
-            + '&zoom='+ zoom[i]
-            + '&size=' + settings.width + 'x' + settings.height
-            + '&sensor=false'
+            + '&center='  + settings.latitude + ',' + settings.longitude
+            + '&zoom='    + zoom[i]
+            + '&size='    + settings.width + 'x' + settings.height
+            + '&sensor='  + settings.sensor
           )
           .attr('height', settings.height)
           .attr('width', settings.width)
