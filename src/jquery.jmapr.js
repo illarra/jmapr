@@ -6,7 +6,7 @@
  * Released under the MIT, BSD, and GPL Licenses.
  * This Code shall be used for Good, not Evil.
  */
-(function($){
+(function($) {
   $.fn.jmapr = function(options) {
     // Default settings
     var settings = {
