@@ -1,3 +1,11 @@
+/*!
+ * jMapr jQuery plugin
+ * Flickr style maps for jQuery
+ * 
+ * http://illarra.com
+ * Released under the MIT, BSD, and GPL Licenses.
+ * This Code shall be used for Good, not Evil.
+ */
 (function($){
   $.fn.jmapr = function(options) {
     // Default settings
@@ -58,7 +66,9 @@
             'position': 'absolute',
             'top'     : 0,
             'left'    : 0,
-            'zIndex'  : 999 - zoom[i]
+            'zIndex'  : 999 - zoom[i],
+            'height'  : settings.height,
+            'width'   : settings.width
           })
           .appendTo($this);
       }
