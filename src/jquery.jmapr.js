@@ -25,7 +25,7 @@
       var $this    = $(this),
           maptypes = ['roadmap', 'satellite', 'terrain', 'hybrid'],
           idPrefix = 'jmapr_',
-          zoom;
+          i, zoom;
          
       // If options exist, lets merge them
       // with our default settings
@@ -49,7 +49,7 @@
       });
       
       // Create static images and append to map
-      for (i in zoom) {
+      for (i = 0; i < zoom.length; i++) {
         $('<img />')
           .attr('id', idPrefix + i)
           .attr('src',
