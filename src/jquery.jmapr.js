@@ -10,28 +10,62 @@
   $.fn.jmapr = function(options) {
     // Default settings
     var settings = {
-      'latitude'    : 0,
-      'longitude'   : 0,
-      'height'      : 100,
-      'width'       : 300,
-      'zoom'        : [3,6,13],
-      'maptype'     : 'terrain',
-      'sensor'      : 'false',
-      'fadeDuration': 200
-    };
+          'latitude'    : 0,
+          'longitude'   : 0,
+          'height'      : '100px',
+          'width'       : '300px',
+          'zoom'        : [3,6,13],
+          'maptype'     : 'terrain',
+          'sensor'      : 'false',
+          'fadeDuration': 200,
+          'dotCss'      : {
+            'background-color': '#fe40a3',
+            'height'          : '8px',
+            'width'           : '8px',
+            'border'          : '2px solid #fff',
+            'border-radius'   : '8px',
+            'box-shadow'      : '1px 1px 3px rgba(0, 0, 0, .9)'
+          }
+        };
     
     // Return this to mantain jQuery chainability
     return this.each(function() {
       var $this    = $(this),
           maptypes = ['roadmap', 'satellite', 'terrain', 'hybrid'],
           idPrefix = 'jmapr_',
+          protectedCssAttrs = ['position', 'top', 'left', 'zIndex'],
+          prefixedCssAttrs  = ['border-radius', 'box-shadow'],
           i, zoom;
          
       // If options exist, lets merge them
       // with our default settings
       if (options) {
+        // Manage dotCss object first
+        if (options.dotCss) {
+          for (i = 0; i < protectedCssAttrs.length; i++) {
+            delete options.dotCss[protectedCssAttrs[i]];
+          }
+          
+          $.extend(settings.dotCss, options.dotCss);
+          
+          delete options['dotCss'];
+        }
+        
         $.extend(settings, options);
       }
+      
+      // Generate vendor prefixes for Css
+      for (i = 0; i < prefixedCssAttrs.length; i++) {
+        if (settings.dotCss[prefixedCssAttrs[i]]) {
+          settings.dotCss['-webkit-' + prefixedCssAttrs[i]] = settings.dotCss['-moz-' + prefixedCssAttrs[i]] = settings.dotCss[prefixedCssAttrs[i]];
+        }
+      }
+      
+      // Parse int height and widths
+      settings.intHeight    = parseInt(settings.height);
+      settings.intWidth     = parseInt(settings.width);
+      settings.intDotHeight = parseInt(settings.dotCss.height);
+      settings.intDotWidth  = parseInt(settings.dotCss.width);
       
       // Check if maptype is allowed
       if (-1 == $.inArray(settings.maptype, maptypes)) {
@@ -57,35 +91,35 @@
             + '?maptype=' + settings.maptype
             + '&center='  + settings.latitude + ',' + settings.longitude
             + '&zoom='    + zoom[i]
-            + '&size='    + settings.width + 'x' + settings.height
+            + '&size='    + settings.intWidth + 'x' + settings.intHeight
             + '&sensor='  + settings.sensor
           )
-          .attr('height', settings.height)
-          .attr('width', settings.width)
+          .attr('height', settings.intHeight)
+          .attr('width', settings.intWidth)
           .css({
             'position': 'absolute',
             'top'     : 0,
             'left'    : 0,
             'zIndex'  : 999 - zoom[i],
-            'height'  : settings.height,
-            'width'   : settings.width
+            'height'  : settings.intHeight + 'px',
+            'width'   : settings.intWidth + 'px'
           })
           .appendTo($this);
       }
       
       // Create dot and append to map
-      // TODO: use a nice image or canvas
+      $.extend(settings.dotCss, {
+        'position': 'absolute',
+        'top'     : (settings.intHeight / 2) - (settings.intDotHeight / 2),
+        'left'    : (settings.intWidth / 2) - (settings.intDotWidth / 2),
+        'zIndex'  : 999
+      });
+      
       $('<div />')
         .attr('id', idPrefix + 'dot')
-        .css({
-          'position'        : 'absolute',
-          'top'             : (settings.height / 2) - 8,
-          'left'            : (settings.width / 2) - 8,
-          'zIndex'          : 999,
-          'background-color': 'green',
-          'height'          : 16,
-          'width'           : 16
-        })
+        .attr('height', settings.intDotHeight)
+        .attr('width', settings.intDotWidth)
+        .css(settings.dotCss)
         .appendTo($this);
       
       // UX

@@ -11,8 +11,12 @@
     <script>
       $(document).ready(function(){
         $('#map').jmapr({
-          latitude : 43.28801,
-          longitude: -2.16894
+          'latitude' : 43.28801,
+          'longitude': -2.16894,
+          'dotCss'   : {
+            'background-color': '#0063dc',
+            'position'        : 'fixed' // This will be ignored
+          }
         }).hide().show(); // Chainability test
       });
     </script>
