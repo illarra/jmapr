@@ -32,10 +32,10 @@
     return this.each(function() {
       var $this    = $(this),
           maptypes = ['roadmap', 'satellite', 'terrain', 'hybrid'],
-          idPrefix = 'jmapr_',
+          idPrefix = $(this).attr('id') + '_jmapr_',
           protectedCssAttrs = ['position', 'top', 'left', 'zIndex'],
           prefixedCssAttrs  = ['border-radius', 'box-shadow'],
-          i, zoom;
+          dotPositionCss, i, zoom;
          
       // If options exist, lets merge them
       // with our default settings
@@ -79,7 +79,9 @@
       
       // Set map div as relative
       $this.css({
-        position: 'relative'
+        'position': 'relative',
+        'height'  : settings.intHeight + 'px',
+        'width'   : settings.intWidth + 'px'
       });
       
       // Create static images and append to map
@@ -102,25 +104,40 @@
             'left'    : 0,
             'zIndex'  : 999 - zoom[i],
             'height'  : settings.intHeight + 'px',
-            'width'   : settings.intWidth + 'px'
+            'width'   : settings.intWidth + 'px',
+            'cursor'  : 'pointer'
           })
           .appendTo($this);
       }
       
       // Create dot and append to map
-      $.extend(settings.dotCss, {
-        'position': 'absolute',
-        'top'     : (settings.intHeight / 2) - (settings.intDotHeight / 2),
-        'left'    : (settings.intWidth / 2) - (settings.intDotWidth / 2),
-        'zIndex'  : 999
-      });
-      
       $('<div />')
         .attr('id', idPrefix + 'dot')
         .attr('height', settings.intDotHeight)
         .attr('width', settings.intDotWidth)
-        .css(settings.dotCss)
         .appendTo($this);
+      
+      dotPositionCss = {
+        'position': 'absolute',
+        'top'     : (settings.intHeight / 2) - (settings.intDotHeight / 2),
+        'left'    : (settings.intWidth / 2) - (settings.intDotWidth / 2),
+        'zIndex'  : 999,
+        'cursor'  : 'pointer'
+      };
+      
+      // Add class if set, and update CSS
+      if (settings.dotClass) {
+        dotPositionCss.height = settings.dotCss.height;
+        dotPositionCss.width  = settings.dotCss.width;
+        
+        settings.dotCss = dotPositionCss;
+        
+        $('#' + idPrefix + 'dot').addClass(settings.dotClass);
+      } else {
+        $.extend(settings.dotCss, dotPositionCss);
+      }
+      
+      $('#' + idPrefix + 'dot').css(settings.dotCss);
       
       // UX
       // First zoom
