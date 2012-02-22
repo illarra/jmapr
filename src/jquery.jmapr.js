@@ -13,7 +13,7 @@
           'latitude'    : 0,
           'longitude'   : 0,
           'height'      : '100px',
-          'width'       : '300px',
+          'width'       : this.parent().width(),
           'zoom'        : [3,6,13],
           'maptype'     : 'terrain',
           'sensor'      : 'false',
