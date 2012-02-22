@@ -102,7 +102,7 @@
             'position': 'absolute',
             'top'     : 0,
             'left'    : 0,
-            'zIndex'  : 999 - zoom[i],
+            'zIndex'  : 30 - zoom[i],
             'height'  : settings.intHeight + 'px',
             'width'   : settings.intWidth + 'px',
             'cursor'  : 'pointer'
@@ -121,7 +121,7 @@
         'position': 'absolute',
         'top'     : (settings.intHeight / 2) - (settings.intDotHeight / 2),
         'left'    : (settings.intWidth / 2) - (settings.intDotWidth / 2),
-        'zIndex'  : 999,
+        'zIndex'  : 30,
         'cursor'  : 'pointer'
       };
       
